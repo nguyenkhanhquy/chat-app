@@ -43,9 +43,16 @@ const ChatBox = () => {
                 {messages.map((msg, index) => (
                     <HStack key={index} justify={msg.userId === userId ? "flex-end" : "flex-start"} mb={4}>
                         {msg.userId !== userId && <Avatar name="Other" />}
-                        <Box bg={msg.userId === userId ? "blue.100" : "green.100"} p={3} borderRadius="lg" maxW="70%">
-                            <Text>{msg.text}</Text>
+
+                        <Box maxW="70%">
+                            <Text fontSize="sm" fontWeight="bold">
+                                {msg.userId}
+                            </Text>
+                            <Box bg={msg.userId === userId ? "blue.100" : "green.100"} p={3} borderRadius="lg">
+                                <Text>{msg.text}</Text>
+                            </Box>
                         </Box>
+
                         {msg.userId === userId && <Avatar name="Me" />}
                     </HStack>
                 ))}
