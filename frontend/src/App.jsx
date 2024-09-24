@@ -1,30 +1,18 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { ChakraProvider, Box, Heading } from "@chakra-ui/react";
+import ChatBox from "./components/ChatBox";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
-        <>
-            <div>
-                <a href="https://vitejs.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-        </>
+        <ChakraProvider>
+            <Box display="flex" justifyContent="center" alignItems="center" w="100vw" h="100vh" bg="gray.100">
+                <Box w="100%" maxW="500px" h="80%" maxH="100vh" bg="white" borderRadius="md" boxShadow="lg" p={6}>
+                    <Heading size="lg" textAlign="center" mb={4}>
+                        Real-Time Chat App
+                    </Heading>
+                    <ChatBox />
+                </Box>
+            </Box>
+        </ChakraProvider>
     );
 }
 
