@@ -1,12 +1,16 @@
+require("dotenv").config();
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+
+const FE_URL = process.env.FE_URL;
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "*",
+        origin: FE_URL,
         methods: ["GET", "POST"],
     },
 });
@@ -19,11 +23,10 @@ io.on("connection", (socket) => {
     });
 
     socket.on("disconnect", () => {
-        console.log("User disconnected");
+        console.log(`User disconnected: ${socket.id}`);
     });
 });
 
-require("dotenv").config();
 const PORT = process.env.PORT;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
