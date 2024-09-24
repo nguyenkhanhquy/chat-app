@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Box, Input, Button, HStack, VStack, Text, Avatar } from "@chakra-ui/react";
 import { io } from "socket.io-client";
 
@@ -8,6 +8,7 @@ const ChatBox = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [userId, setUserId] = useState(null);
+    const messagesEndRef = useRef(null);
 
     useEffect(() => {
         let storedUserId = sessionStorage.getItem("userId");
@@ -37,6 +38,14 @@ const ChatBox = () => {
         }
     };
 
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
     return (
         <VStack spacing={4} align="stretch">
             <Box h="400px" p={4} borderWidth={1} borderRadius="lg" overflowY="auto">
@@ -56,6 +65,8 @@ const ChatBox = () => {
                         {msg.userId === userId && <Avatar name="Me" />}
                     </HStack>
                 ))}
+
+                <div ref={messagesEndRef} />
             </Box>
 
             <HStack>
