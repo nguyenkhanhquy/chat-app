@@ -51,18 +51,19 @@ const ChatBox = () => {
             <Box h="400px" p={4} borderWidth={1} borderRadius="lg" overflowY="auto">
                 {messages.map((msg, index) => (
                     <HStack key={index} justify={msg.userId === userId ? "flex-end" : "flex-start"} mb={4}>
-                        {msg.userId !== userId && <Avatar name="Other" />}
+                        {msg.userId !== userId && <Avatar name={msg.userId} />}
 
                         <Box maxW="70%">
-                            <Text fontSize="sm" fontWeight="bold">
+                            <Text fontSize="xs" fontWeight="bold">
                                 {msg.userId}
                             </Text>
+
                             <Box bg={msg.userId === userId ? "blue.100" : "green.100"} p={3} borderRadius="lg">
                                 <Text>{msg.text}</Text>
                             </Box>
                         </Box>
 
-                        {msg.userId === userId && <Avatar name="Me" />}
+                        {msg.userId === userId && <Avatar name={msg.userId} />}
                     </HStack>
                 ))}
 
@@ -70,7 +71,16 @@ const ChatBox = () => {
             </Box>
 
             <HStack>
-                <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type a message..." />
+                <Input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type a message..."
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            sendMessage();
+                        }
+                    }}
+                />
                 <Button onClick={sendMessage} colorScheme="teal">
                     Send
                 </Button>
